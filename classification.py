@@ -1,7 +1,5 @@
 from typing import Tuple
 
-import cuml
-import numpy as np
 import pandas as pd
 import sklearn.model_selection
 
@@ -21,7 +19,8 @@ def load_data_from_csv(csv_path: str) -> Tuple[pd.DataFrame, pd.Series]:
 
     label_encoder = sklearn.preprocessing.LabelEncoder()
 
-    data: pd.DataFrame = pd.read_csv(csv_path)
+    data: pd.DataFrame = pd.read_csv(csv_path, na_values="?")
+    data.dropna(inplace=True)
     data.drop("veil-type", axis=1, inplace=True)  # 종류가 하나밖에 없음.
     x: pd.DataFrame = pd.get_dummies(data.drop("class", axis=1))
     x = x.astype(dtype="float32")

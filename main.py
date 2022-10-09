@@ -1,16 +1,19 @@
-import cuml
+import sklearn
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import CategoricalNB
 
 import classification
 
 # 분류기 비교를 위하여 여러 분류기를 준비하였습니다.
 classifiers = {
-    "RandomForest": cuml.RandomForestClassifier(
-        random_state=classification.RANDOM_SEED
-    ),
-    "LogisticRegression": cuml.LogisticRegression(),
-    "SVC": cuml.svm.SVC(random_state=classification.RANDOM_SEED),
-    "KNeighbors": cuml.neighbors.KNeighborsClassifier(),
-    "NaiveBayes": cuml.naive_bayes.CategoricalNB(),
+    "RandomForest": RandomForestClassifier(random_state=classification.RANDOM_SEED),
+    "LogisticRegression": LogisticRegression(),
+    "SVC": SVC(random_state=classification.RANDOM_SEED),
+    "KNeighbors": KNeighborsClassifier(),
+    "NaiveBayes": CategoricalNB(),
 }
 
 classifier_names = list(classifiers.keys())
