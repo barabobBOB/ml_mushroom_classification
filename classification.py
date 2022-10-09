@@ -3,7 +3,24 @@ from typing import Tuple
 import pandas as pd
 import sklearn.model_selection
 
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import CategoricalNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+
 RANDOM_SEED = 42
+
+# 분류기 비교를 위하여 여러 분류기를 준비하였습니다.
+classifiers = {
+    "RandomForest": RandomForestClassifier(random_state=RANDOM_SEED),
+    "LogisticRegression": LogisticRegression(),
+    "SVC": SVC(random_state=RANDOM_SEED),
+    "KNeighbors": KNeighborsClassifier(),
+    "NaiveBayes": CategoricalNB(),
+}
+
+classifier_names = list(classifiers.keys())
 
 
 def load_data_from_csv(csv_path: str) -> Tuple[pd.DataFrame, pd.Series]:
