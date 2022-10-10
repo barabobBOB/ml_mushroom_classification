@@ -5,7 +5,13 @@ import sklearn.model_selection
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.naive_bayes import CategoricalNB
+from sklearn.naive_bayes import (
+    GaussianNB,
+    MultinomialNB,
+    ComplementNB,
+    BernoulliNB,
+    CategoricalNB,
+)
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 
@@ -14,10 +20,15 @@ RANDOM_SEED = 42
 # 분류기 비교를 위하여 여러 분류기를 준비하였습니다.
 classifiers = {
     "RandomForest": RandomForestClassifier(random_state=RANDOM_SEED),
-    "LogisticRegression": LogisticRegression(),
+    "LogisticRegression": LogisticRegression(random_state=RANDOM_SEED),
     "SVC": SVC(random_state=RANDOM_SEED),
     "KNeighbors": KNeighborsClassifier(),
-    "NaiveBayes": CategoricalNB(),
+    "Categorial NaiveBayes": CategoricalNB(),
+    "Multinomial NaiveBayes": MultinomialNB(),
+    "Complement NaiveBayes": ComplementNB(),
+    "Bernoulli NaiveBayes": BernoulliNB(),
+    "Gaussian NaiveBayes": GaussianNB(),
+    "Gaussian NaiveBayes param edit": GaussianNB(var_smoothing=1e-20),
 }
 
 classifier_names = list(classifiers.keys())
@@ -41,6 +52,7 @@ def load_data_from_csv(csv_path: str) -> Tuple[pd.DataFrame, pd.Series]:
     data.drop("veil-type", axis=1, inplace=True)  # 종류가 하나밖에 없음.
     x: pd.DataFrame = pd.get_dummies(data.drop("class", axis=1))
     x = x.astype(dtype="float32")
+    print(x.shape)
     y: pd.Series = label_encoder.fit_transform(data["class"])
     y = y.astype(dtype="float32")
 
